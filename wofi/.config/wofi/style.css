@@ -1,0 +1,65 @@
+/* =========================================================================
+ * WOFI "MUTED SPACE" SKIN (Estilo 2026 para Hyprland)
+ * ========================================================================= */
+@define-color bg_space      rgba(26, 35, 50, 0.85); /* Cristal azul oscuro */
+@define-color planet_blue   #a2bcd1;               /* Celeste claro */
+@define-color shadow_blue   #6c8ca7;               /* Azul intermedio */
+@define-color space_text    #e1e7ed;               /* Texto claro */
+@define-color suit_blue     #3a5b78;               /* Azul del traje */
+
+/* Ventana Principal */
+window {
+    margin: 0px;
+    border: 2px solid @planet_blue;
+    border-radius: 12px;
+    background-color: @bg_space;
+    font-family: "JetBrains Mono", sans-serif;
+}
+
+/* Contenedor interno */
+#outer-box {
+    margin: 15px;
+    background-color: transparent;
+}
+
+/* Barra de búsqueda superior */
+#input {
+    margin-bottom: 15px;
+    border: 1px solid rgba(162, 188, 209, 0.4);
+    border-radius: 8px;
+    padding: 8px 12px;
+    background-color: rgba(26, 35, 50, 0.5);
+    color: @space_text;
+}
+
+#input:focus {
+    border: 1px solid @planet_blue;
+    box-shadow: 0 0 4px @planet_blue;
+}
+
+/* Contenedor de la lista de aplicaciones */
+#scroll {
+    background-color: transparent;
+}
+
+#text {
+    color: @space_text;
+    margin-left: 10px;
+}
+
+/* Cada fila de aplicación */
+#entry {
+    padding: 8px;
+    border-radius: 6px;
+    background-color: transparent;
+}
+
+/* Aplicación seleccionada con las flechas o el mouse */
+#entry:selected {
+    background-color: @suit_blue;
+}
+
+#entry:selected #text {
+    color: #ffffff;
+    font-weight: bold;
+}
