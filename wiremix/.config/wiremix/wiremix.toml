@@ -1,0 +1,36 @@
+theme = "astronaut"
+char_set = "default"
+max_volume_percent = 150.0
+enforce_max_volume = false
+
+[themes.astronaut]
+inherit = "default"
+
+selector = { fg = "#a2bcd1" }
+
+tab = { fg = "#cbd5e1" }
+tab_selected = { fg = "#a2bcd1", add_modifier = "BOLD" }
+tab_marker = { fg = "#a2bcd1" }
+
+node_title = { fg = "#cbd5e1" }
+node_target = { fg = "#a2bcd1" }
+volume = { fg = "#cbd5e1" }
+volume_empty = { fg = "#2a3648" }
+volume_filled = { fg = "#a2bcd1" }
+
+meter_inactive = { fg = "#2a3648" }
+meter_active = { fg = "#a2bcd1" }
+meter_overload = { fg = "#e06c75" }
+meter_center_inactive = { fg = "#2a3648" }
+meter_center_active = { fg = "#a2bcd1" }
+
+config_device = { fg = "#cbd5e1" }
+config_profile = { fg = "#a2bcd1" }
+
+dropdown_icon = { fg = "#a2bcd1" }
+dropdown_border = { fg = "#a2bcd1" }
+dropdown_item = { fg = "#cbd5e1" }
+dropdown_selected = { fg = "#1a2332", bg = "#a2bcd1", add_modifier = "BOLD" }
+
+help_border = { fg = "#a2bcd1" }
+help_item = { fg = "#cbd5e1" }
