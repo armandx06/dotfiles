@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <object class="GtkMenu" id="menu">
+    <child>
+      <object class="GtkMenuItem" id="performance">
+        <property name="visible">True</property>
+        <property name="can-focus">False</property>
+        <property name="label" translatable="yes">󰓅 Rendimiento</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkMenuItem" id="balanced">
+        <property name="visible">True</property>
+        <property name="can-focus">False</property>
+        <property name="label" translatable="yes">󰾆 Balanceado</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkMenuItem" id="power-saver">
+        <property name="visible">True</property>
+        <property name="can-focus">False</property>
+        <property name="label" translatable="yes">󰌪 Ahorro de Energía</property>
+      </object>
+    </child>
+  </object>
+</interface>
