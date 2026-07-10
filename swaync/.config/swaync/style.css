@@ -1,0 +1,145 @@
+@define-color cc-bg rgba(23, 32, 42, 0.85);
+@define-color notif-bg rgba(33, 47, 61, 0.9);
+@define-color notif-hover rgba(40, 58, 75, 1.0);
+@define-color text #d5dbdb;
+@define-color text-dim #85929e;
+@define-color accent #7fb3d5;
+@define-color critical #e74c3c;
+
+* {
+    font-family: "JetBrainsMono Nerd Font", "Noto Sans", sans-serif;
+    font-weight: 500;
+    background-color: transparent;
+}
+
+.control-center {
+    background: @cc-bg;
+    border: 2px solid @accent;
+    border-radius: 12px;
+    margin: 10px;
+    padding: 10px;
+}
+
+.notification-row {
+    outline: none;
+    margin: 0px;
+    padding: 0px;
+}
+
+.notification {
+    background: @notif-bg;
+    border-radius: 8px;
+    border: 1px solid rgba(127, 179, 213, 0.2);
+    margin: 6px 10px; 
+    padding: 14px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
+    transition: background 0.15s ease-in-out;
+}
+
+.notification:hover {
+    background: @notif-hover;
+}
+
+.notification-image,
+.notification image,
+image.notification-image {
+    margin-right: 14px;
+}
+
+.notification-content {
+    color: @text;
+    padding: 2px;
+}
+
+.notification-time {
+    color: @text-dim;
+    font-size: 0.8rem;
+}
+
+.widget-title {
+    margin: 12px 10px 6px 10px;
+    padding: 0px;
+    background: transparent;
+}
+
+.widget-title > label {
+    font-size: 1.2rem;
+    color: @accent;
+    font-weight: 700;
+}
+
+.widget-title > button {
+    background: @cc-bg;
+    color: @text;
+    padding: 5px 12px;
+    border-radius: 6px;
+    border: 1px solid @accent;
+    margin: 0px;
+}
+
+.widget-title button:hover {
+    background: @accent;
+    color: @cc-bg;
+}
+
+.notification-close-button {
+    background: transparent;
+    color: @accent;
+    border-radius: 4px;
+    padding: 2px;
+    margin-right: 2px;
+    transition: all 0.15s ease-in-out;
+}
+
+.notification-close-button label {
+    font-size: 1.1rem;
+}
+
+.notification-close-button:hover {
+    background: @critical;
+    color: @cc-bg;
+}
+
+.widget-dnd {
+    background: transparent;
+    margin: 6px 10px;
+    padding: 0px;
+}
+
+.widget-dnd > label {
+    color: @text-dim;
+    font-size: 0.95rem;
+    font-weight: 600;
+}
+
+.widget-dnd > switch {
+    font-size: 0px;
+    background: @cc-bg;
+    border: 1px solid rgba(127, 179, 213, 0.4);
+    border-radius: 20px;
+    box-shadow: none;
+    outline: none;
+    min-height: 22px;
+    min-width: 44px;
+    padding: 0px;
+    margin: 0px;
+    transition: all 0.2s ease-in-out;
+}
+
+.widget-dnd > switch:checked {
+    background: @accent;
+    border: 1px solid @accent;
+}
+
+.widget-dnd > switch slider {
+    background: @text;
+    border-radius: 50%;
+    min-height: 14px;
+    min-width: 14px;
+    margin: 3px;
+    transition: all 0.2s ease-in-out;
+}
+
+.widget-dnd > switch:checked slider {
+    background: @cc-bg;
+}
