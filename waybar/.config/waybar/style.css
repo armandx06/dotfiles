@@ -103,6 +103,7 @@ tooltip label {
 }
 
 #custom-notification,
+#bluetooth,
 #network,
 #pulseaudio,
 #battery,
@@ -115,11 +116,41 @@ tooltip label {
 }
 
 #custom-notification:hover,
+#bluetooth:hover,
 #network:hover,
 #pulseaudio:hover,
 #custom-power-profile:hover,
 #custom-power:hover {
   color: @space_text;
+}
+
+#idle_inhibitor {
+  margin-right: 8px;
+  padding: 2px 8px;
+  color: @space_muted;
+  font-size: 16px;
+  transition: color 0.2s ease;
+}
+
+#idle_inhibitor.activated {
+  color: @planet_blue;
+}
+
+#idle_inhibitor:hover {
+  color: @space_text;
+}
+
+#tray {
+  margin-right: 8px;
+  padding: 2px 8px;
+}
+
+#tray > .passive {
+  -gtk-icon-effect: dim;
+}
+
+#tray > .needs-attention {
+  -gtk-icon-effect: highlight;
 }
 
 #battery.charging,
@@ -131,7 +162,8 @@ tooltip label {
   animation: blink 0.5s linear infinite alternate;
 }
 
-#custom-notification {
+#custom-notification,
+#bluetooth {
   font-size: 16px;
 }
 

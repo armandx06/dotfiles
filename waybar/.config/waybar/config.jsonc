@@ -4,10 +4,13 @@
   "modules-center": ["clock"],
   "modules-right": [
     "custom/notification",
+    "bluetooth",
     "network",
     "pulseaudio",
     "battery",
     "custom/power-profile",
+    "idle_inhibitor",
+    "tray",
     "custom/power",
   ],
   "clock": {
@@ -53,6 +56,19 @@
     "format-icons": ["󰂎", "󰁺", "󰁼", "󰁾", "󰂀", "󰁹"],
     "tooltip-format": "{time}",
   },
+  "bluetooth": {
+    "format": "󰂯",
+    "format-disabled": "󰂲",
+    "format-off": "󰂲",
+    "format-on": "󰂯",
+    "format-connected": "󰂱",
+    "format-no-controller": "󰂲",
+    "tooltip-format": "{controller_alias}\n{num_connections} conectado(s)",
+    "tooltip-format-disabled": "Bluetooth desactivado",
+    "tooltip-format-off": "Bluetooth apagado",
+    "tooltip-format-no-controller": "Sin adaptador Bluetooth",
+    "on-click": "~/.config/waybar/scripts/wofi-bluetooth.sh",
+  },
   "network": {
     "format-wifi": "󰤨  {essid}",
     "format-ethernet": "󰈀  {ifname}",
@@ -71,6 +87,19 @@
     "on-click-right": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
     "on-scroll-up": "wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 5%+",
     "on-scroll-down": "wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 5%-",
+  },
+  "idle_inhibitor": {
+    "format": "{icon}",
+    "format-icons": {
+      "activated": "󰈈",
+      "deactivated": "󰈉",
+    },
+    "tooltip-format-activated": "Mantener despierto: activado",
+    "tooltip-format-deactivated": "Mantener despierto: desactivado",
+  },
+  "tray": {
+    "icon-size": 18,
+    "spacing": 8,
   },
   "custom/power": {
     "format": "⏻",

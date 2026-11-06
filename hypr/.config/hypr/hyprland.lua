@@ -34,14 +34,26 @@ hl.env("HYPRSHOT_DIR", "/home/armandx06/Imágenes/Screenshots")
 ---- AUTOSTART ----
 -------------------
 
+local function apply_monitor_layout()
+    hl.exec_cmd("~/.config/hypr/scripts/auto-monitors.sh")
+end
+
 hl.on("hyprland.start", function()
     hl.exec_cmd("hyprpaper")
     hl.exec_cmd("waybar")
     hl.exec_cmd("swaync")
     hl.exec_cmd("hypridle")
+    hl.exec_cmd("systemctl --user start hyprpolkitagent")
+    hl.exec_cmd("wl-paste --watch cliphist store")
     hl.exec_cmd(terminal)
     hl.exec_cmd(browser)
+    apply_monitor_layout()
 end)
+
+-- Al conectar, desconectar o recargar la config, ajustar eDP-1 automáticamente.
+hl.on("monitor.added", apply_monitor_layout)
+hl.on("monitor.removed", apply_monitor_layout)
+hl.on("config.reloaded", apply_monitor_layout)
 
 -----------------------
 ---- LOOK AND FEEL ----
@@ -64,13 +76,14 @@ hl.config({
         inactive_opacity = 0.90,
         blur = {
             enabled = true,
-            size = 6,
-            passes = 3
+            size = 5,
+            passes = 2,
+            new_optimizations = true
         },
         shadow = {
             enabled = true,
-            range = 15,
-            render_power = 3,
+            range = 10,
+            render_power = 2,
             color = "rgba(1a2332ee)"
         }
     },
@@ -88,7 +101,8 @@ hl.config({
         follow_mouse = 1,
         sensitivity = 0,
         touchpad = {
-            natural_scroll = false
+            natural_scroll = false,
+            tap_to_click = true
         }
     }
 })
@@ -114,6 +128,12 @@ hl.bind(mainMod .. " + SHIFT + M", hl.dsp.exit())
 hl.bind("Print", hl.dsp.exec_cmd("hyprshot -m region"))
 hl.bind(mainMod .. " + Print", hl.dsp.exec_cmd("hyprshot -m output"))
 hl.bind(mainMod .. " + SHIFT + Print", hl.dsp.exec_cmd("hyprshot -m window"))
+
+hl.bind(mainMod .. " + V", hl.dsp.exec_cmd("~/.config/hypr/scripts/cliphist-menu.sh"))
+hl.bind(mainMod .. " + TAB", hl.dsp.exec_cmd(
+    "~/.config/hypr/scripts/window-switcher.sh"))
+hl.bind(mainMod .. " + SHIFT + D", hl.dsp.exec_cmd(
+    "~/.config/hypr/scripts/auto-monitors.sh"))
 
 hl.bind(mainMod .. " + H", hl.dsp.focus({
     direction = "left"
@@ -163,10 +183,10 @@ hl.bind(mainMod .. " + mouse:273", hl.dsp.window.resize(), {
 })
 
 hl.bind("XF86AudioRaiseVolume",
-    hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SINK@ 0 && wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"), {
+    hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SINK@ 0 && wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 5%+"), {
         repeating = true
     })
-hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"), {
+hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 5%-"), {
     repeating = true
 })
 

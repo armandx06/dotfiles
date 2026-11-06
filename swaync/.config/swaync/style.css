@@ -1,13 +1,13 @@
-@define-color cc-bg rgba(23, 32, 42, 0.85);
+@define-color cc-bg rgba(26, 35, 50, 0.85);
 @define-color notif-bg rgba(33, 47, 61, 0.9);
 @define-color notif-hover rgba(40, 58, 75, 1.0);
-@define-color text #d5dbdb;
+@define-color text #e1e7ed;
 @define-color text-dim #85929e;
-@define-color accent #7fb3d5;
-@define-color critical #e74c3c;
+@define-color accent #a2bcd1;
+@define-color critical #e06c75;
 
 * {
-    font-family: "JetBrainsMono Nerd Font", "Noto Sans", sans-serif;
+    font-family: "CaskaydiaCove Nerd Font", "Noto Sans", sans-serif;
     font-weight: 500;
     background-color: transparent;
 }
@@ -29,7 +29,7 @@
 .notification {
     background: @notif-bg;
     border-radius: 8px;
-    border: 1px solid rgba(127, 179, 213, 0.2);
+    border: 1px solid rgba(162, 188, 209, 0.2);
     margin: 6px 10px; 
     padding: 14px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
@@ -115,7 +115,7 @@ image.notification-image {
 .widget-dnd > switch {
     font-size: 0px;
     background: @cc-bg;
-    border: 1px solid rgba(127, 179, 213, 0.4);
+    border: 1px solid rgba(162, 188, 209, 0.4);
     border-radius: 20px;
     box-shadow: none;
     outline: none;
