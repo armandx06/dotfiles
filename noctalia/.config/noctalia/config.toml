@@ -1,0 +1,47 @@
+# Noctalia Shell — configuración principal.
+#
+# La geometría de la barra está calculada para los gaps de Hyprland:
+#   gaps_out = 12  ->  margin_ends = 12, margin_edge = 12
+#   rounding = 10  ->  radius = 10
+# Si cambias los gaps o el rounding en hyprland.lua, actualiza estos valores.
+
+[bar.default]
+position    = "top"
+thickness   = 28
+margin_ends = 12
+margin_edge = 12
+radius      = 10
+
+# Escritorio: Noctalia dibuja el fondo, así que hyprpaper ya no se inicia.
+[wallpaper]
+directory = "/home/armandx06/Imágenes/Wallpapers"
+
+[wallpaper.default]
+path = "/home/armandx06/Imágenes/Wallpapers/astronaut.png"
+
+# Paleta derivada del fondo (aspecto gris-azulado aprobado en la prueba).
+[theme]
+mode             = "dark"
+source           = "wallpaper"
+wallpaper_scheme = "muted"
+
+# Mantener Kitty sincronizada con la paleta de Noctalia.
+# Noctalia escribe kitty/themes/noctalia.conf y el `include` en kitty.conf.
+[theme.templates]
+enable_builtin_templates = true
+builtin_ids              = ["kitty"]
+
+# Inactividad (sustituye a hypridle + hyprlock).
+# Equivale a la configuración anterior: bloquear a los 10 min,
+# apagar pantalla a los 15 min y suspender a los 20 min.
+[idle.behavior.lock]
+enabled = true
+timeout = 600.0
+
+[idle.behavior.screen-off]
+enabled = true
+timeout = 900.0
+
+[idle.behavior.lock-and-suspend]
+enabled = true
+timeout = 1200.0

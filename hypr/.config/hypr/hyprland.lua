@@ -22,7 +22,7 @@ hl.monitor({
 local terminal = "kitty"
 local fileManager = "nautilus"
 local browser = "firefox"
-local menu = "wofi --show drun"
+local ipc = "noctalia msg "
 
 -------------------------------
 ---- ENVIRONMENT VARIABLES ----
@@ -39,12 +39,11 @@ local function apply_monitor_layout()
 end
 
 hl.on("hyprland.start", function()
-    hl.exec_cmd("hyprpaper")
-    hl.exec_cmd("waybar")
-    hl.exec_cmd("swaync")
-    hl.exec_cmd("hypridle")
+    -- Noctalia cubre barra, notificaciones, portapapeles, idle, bloqueo y
+    -- fondo de pantalla. Waybar, SwayNC, Hypridle, hyprpaper y hyprlock
+    -- siguen en el repo como respaldo, pero ya no se inician solos.
+    hl.exec_cmd("noctalia --daemon")
     hl.exec_cmd("systemctl --user start hyprpolkitagent")
-    hl.exec_cmd("wl-paste --watch cliphist store")
     hl.exec_cmd(terminal)
     hl.exec_cmd(browser)
     apply_monitor_layout()
@@ -114,10 +113,12 @@ hl.config({
 local mainMod = "SUPER"
 
 hl.bind(mainMod .. " + RETURN", hl.dsp.exec_cmd(terminal))
-hl.bind(mainMod .. " + SPACE", hl.dsp.exec_cmd(menu))
+hl.bind(mainMod .. " + SPACE", hl.dsp.exec_cmd(ipc .. "panel-toggle launcher"))
+hl.bind(mainMod .. " + S", hl.dsp.exec_cmd(ipc .. "panel-toggle control-center"))
+hl.bind(mainMod .. " + comma", hl.dsp.exec_cmd(ipc .. "settings-toggle"))
 hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(fileManager))
 hl.bind(mainMod .. " + B", hl.dsp.exec_cmd(browser))
-hl.bind(mainMod .. " + L", hl.dsp.exec_cmd("hyprlock"))
+hl.bind(mainMod .. " + L", hl.dsp.exec_cmd(ipc .. "session lock"))
 hl.bind(mainMod .. " + Q", hl.dsp.window.close())
 hl.bind(mainMod .. " + D", hl.dsp.window.float({
     action = "toggle"
@@ -129,9 +130,8 @@ hl.bind("Print", hl.dsp.exec_cmd("hyprshot -m region"))
 hl.bind(mainMod .. " + Print", hl.dsp.exec_cmd("hyprshot -m output"))
 hl.bind(mainMod .. " + SHIFT + Print", hl.dsp.exec_cmd("hyprshot -m window"))
 
-hl.bind(mainMod .. " + V", hl.dsp.exec_cmd("~/.config/hypr/scripts/cliphist-menu.sh"))
-hl.bind(mainMod .. " + TAB", hl.dsp.exec_cmd(
-    "~/.config/hypr/scripts/window-switcher.sh"))
+hl.bind(mainMod .. " + V", hl.dsp.exec_cmd(ipc .. "panel-toggle clipboard"))
+hl.bind(mainMod .. " + TAB", hl.dsp.exec_cmd(ipc .. "window-switcher"))
 hl.bind(mainMod .. " + SHIFT + D", hl.dsp.exec_cmd(
     "~/.config/hypr/scripts/auto-monitors.sh"))
 
@@ -183,20 +183,21 @@ hl.bind(mainMod .. " + mouse:273", hl.dsp.window.resize(), {
 })
 
 hl.bind("XF86AudioRaiseVolume",
-    hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SINK@ 0 && wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 5%+"), {
+    hl.dsp.exec_cmd(ipc .. "volume-up"), {
         repeating = true
     })
-hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 5%-"), {
-    repeating = true
-})
+hl.bind("XF86AudioLowerVolume",
+    hl.dsp.exec_cmd(ipc .. "volume-down"), {
+        repeating = true
+    })
 
-hl.bind("XF86AudioMute", hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"))
+hl.bind("XF86AudioMute", hl.dsp.exec_cmd(ipc .. "volume-mute"))
 hl.bind("XF86AudioPlay", hl.dsp.exec_cmd("playerctl play-pause"))
 hl.bind("XF86AudioNext", hl.dsp.exec_cmd("playerctl next"))
 hl.bind("XF86AudioPrev", hl.dsp.exec_cmd("playerctl previous"))
 
-hl.bind("XF86MonBrightnessUp", hl.dsp.exec_cmd("brightnessctl s 10%+"))
-hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("brightnessctl s 10%-"))
+hl.bind("XF86MonBrightnessUp", hl.dsp.exec_cmd(ipc .. "brightness-up"))
+hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd(ipc .. "brightness-down"))
 
 --------------------------------
 ---- WINDOWS AND WORKSPACES ----
@@ -210,4 +211,35 @@ hl.window_rule({
     float = true,
     center = true,
     size = "500 400"
+})
+
+-- La ventana de ajustes de Noctalia es una ventana normal: flotante y grande.
+hl.window_rule({
+    name = "noctalia-settings",
+    match = {
+        class = "^(dev\\.noctalia\\.Noctalia)$"
+    },
+    float = true,
+    center = true,
+    size = "1080 920"
+})
+
+-- Las superficies de Noctalia se dibujan solas: sin animaciones de Hyprland
+-- y con blur del compositor detrás de sus paneles.
+hl.layer_rule({
+    name = "noctalia-no-anim",
+    match = {
+        namespace = "^noctalia-(bar-.+|notification|dock|panel|attached-panel|osd|window-switcher)$"
+    },
+    no_anim = true
+})
+
+hl.layer_rule({
+    name = "noctalia-blur",
+    match = {
+        namespace = "^noctalia-(bar-.+|notification|dock|panel|attached-panel|osd|window-switcher)$"
+    },
+    ignore_alpha = 0.5,
+    blur = true,
+    blur_popups = true
 })
