@@ -30,20 +30,25 @@ disable_edp() {
 }
 
 enable_edp() {
-    hyprctl eval 'hl.monitor({output="eDP-1", mode="1920x1080@60", position="0x0", scale=1})' \
+    # `disabled=false` es obligatorio: sin él, hl.monitor no reactiva una
+    # salida que estaba apagada.
+    hyprctl eval 'hl.monitor({output="eDP-1", mode="1920x1080@60", position="0x0", scale=1, disabled=false})' \
         >/dev/null 2>&1 || true
 }
 
 if [ "$docked" = "true" ]; then
-    apply_dp1
-    sleep 0.2
+    # Desactivar eDP-1 ANTES de mover DP-1 al origen. Si se mueve primero,
+    # ambos quedan un instante en 0x0 y Hyprland avisa:
+    # "El monitor ... se superpone con otros monitores en la disposición".
+    if [ "$edp_enabled" = "true" ]; then
+        disable_edp
+        sleep 0.2
+    fi
 
     if hyprctl monitors -j 2>/dev/null |
         jq -e 'any(.[]; .name == "DP-1" and (.disabled != true))' >/dev/null 2>&1; then
-        if [ "$edp_enabled" = "true" ]; then
-            disable_edp
-        fi
-    elif [ "$edp_enabled" != "true" ]; then
+        apply_dp1
+    else
         # El dock no llegó a activarse: no dejar la sesión sin pantallas.
         enable_edp
     fi
